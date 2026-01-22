@@ -15,8 +15,6 @@ import androidx.fragment.app.DialogFragment;
 public class AddCityFragment extends DialogFragment {
     interface AddCityDialogListener {
         void addCity(City city);
-
-        void editCity(City city);
     }
     private AddCityDialogListener listener;
 
