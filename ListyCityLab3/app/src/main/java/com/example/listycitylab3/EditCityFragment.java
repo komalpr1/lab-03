@@ -14,17 +14,21 @@ import androidx.fragment.app.DialogFragment;
 
 public class EditCityFragment extends DialogFragment {
 
-    public EditCityFragment(City selected) {
+    private EditCityDialogListener listener;
+    private City selectedCity;
+    private int position;
+
+    public EditCityFragment(City selected, int position) {
+        this.selectedCity = selected;
+        this.position = position;
 
     }
 
     interface EditCityDialogListener {
 
-        void editCity(City city);
+        void editCity(int position, City city);
     }
-
-    private EditCityDialogListener listener;
-
+    
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
@@ -42,7 +46,12 @@ public class EditCityFragment extends DialogFragment {
                 LayoutInflater.from(getContext()).inflate(R.layout.fragment_add_city, null);
         EditText editCityName = view.findViewById(R.id.edit_text_city_text);
         EditText editProvinceName = view.findViewById(R.id.edit_text_province_text);
+
+        editCityName.setText(selectedCity.getName());
+        editProvinceName.setText(selectedCity.getProvince());
+
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
         return builder
                 .setView(view)
                 .setTitle("Edit a city")
@@ -50,7 +59,7 @@ public class EditCityFragment extends DialogFragment {
                 .setPositiveButton("Change", (dialog, which) -> {
                     String cityName = editCityName.getText().toString();
                     String provinceName = editProvinceName.getText().toString();
-                    listener.editCity(new City(cityName, provinceName));
+                    listener.editCity(position, new City(cityName, provinceName));
                 })
                 .create();
     }

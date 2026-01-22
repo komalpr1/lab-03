@@ -3,8 +3,6 @@ package com.example.listycitylab3;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -54,8 +52,15 @@ public class MainActivity extends AppCompatActivity implements
 
         cityList.setOnItemClickListener((parent, view, position, id) -> {
             City selected = dataList.get(position);
-            new EditCityFragment(selected).show(getSupportFragmentManager(), "Edit City");
+            new EditCityFragment(selected, position).show(getSupportFragmentManager(), "Edit City");
          });
     }
 
+    @Override
+    public void editCity(int position, City city) {
+
+        dataList.set(position, city);
+        cityAdapter.notifyDataSetChanged();
+
+    }
 }
