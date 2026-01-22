@@ -12,19 +12,20 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
-public class AddCityFragment extends DialogFragment {
-    interface AddCityDialogListener {
-        void addCity(City city);
+public class EditCityFragment extends DialogFragment {
+
+    interface EditCityDialogListener {
 
         void editCity(City city);
     }
-    private AddCityDialogListener listener;
+
+    private EditCityDialogListener listener;
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        if (context instanceof AddCityDialogListener) {
-            listener = (AddCityDialogListener) context;
+        if (context instanceof EditCityFragment.EditCityDialogListener) {
+            listener = (EditCityFragment.EditCityDialogListener) context;
         } else {
             throw new RuntimeException(context + " must implement AddCityDialogListener");
         }
@@ -45,8 +46,13 @@ public class AddCityFragment extends DialogFragment {
                 .setPositiveButton("Add", (dialog, which) -> {
                     String cityName = editCityName.getText().toString();
                     String provinceName = editProvinceName.getText().toString();
-                    listener.addCity(new City(cityName, provinceName));
+                    listener.editCity(new City(cityName, provinceName));
                 })
                 .create();
     }
+}
+
+
+
+
 }
